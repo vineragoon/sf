@@ -95,10 +95,10 @@
   .header {
     display: flex;
     @apply my-12;
-    @apply gap-x-4;
+    @apply flex-wrap gap-x-4 gap-y-8;
 
     .summary {
-      flex: 1 1 0;
+      flex: 1 1 auto;
 
       .description {
         font-weight: 500;

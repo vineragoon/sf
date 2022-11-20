@@ -26,10 +26,12 @@
     return x >= start && x <= end;
   };
   const starcatch_enabling = (star: number) => !config.starcatch.includes(star);
-  const starcatch_drag_start = (star: number) => {
+  const starcatch_drag_start = (star: number) => (e: PointerEvent) => {
     drag_start = star;
+    const target = e.target as HTMLElement;
+    target.releasePointerCapture(e.pointerId);
   };
-  const starcatch_drag_continue = (star: number) => {
+  const starcatch_drag_continue = (star: number) => () => {
     if (drag_start != null) {
       drag_end = star;
     }
@@ -162,7 +164,7 @@
   </div>
 </fieldset>
 
-<fieldset on:mouseleave={starcatch_drag_cancel}>
+<fieldset on:pointerleave={starcatch_drag_cancel}>
   <legend>
     <span>Starcatch</span>
     <span class="help">(click and drag)</span>
@@ -175,8 +177,8 @@
         class:checked={config.starcatch.includes(star)}
         class:disabling={!starcatch_enabling(drag_start)}
         class:active={between(drag_start, drag_end, star)}
-        on:mousedown={() => starcatch_drag_start(star)}
-        on:mouseenter={() => starcatch_drag_continue(star)}
+        on:pointerdown={starcatch_drag_start(star)}
+        on:pointerenter={starcatch_drag_continue(star)}
       >
         <input type="checkbox" bind:group={config.starcatch} value={star} />
         <span>
@@ -187,7 +189,7 @@
   </div>
 </fieldset>
 
-<svelte:window on:mouseup={starcatch_drag_commit} />
+<svelte:window on:pointerup={starcatch_drag_commit} />
 
 <style lang="postcss">
   @tailwind utilities;
@@ -256,6 +258,7 @@
   label.button {
     @apply px-3;
     cursor: pointer;
+    touch-action: none;
 
     &:focus-within {
       @apply bg-slate-700;
