@@ -1,6 +1,6 @@
 # starforce calculator
 
-This is an analytical starforce calculator for GMS, post-Destiny starforce
+This is an analytical starforce calculator for GMS, post-Ignition starforce
 costs, based on the math from https://amph.shinyapps.io/starforce.
 
 This came about from a personal desire to have a starforce calculator that was
