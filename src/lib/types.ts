@@ -6,7 +6,6 @@ export type Config = {
   safeguard: boolean;
   event_thirty_off: boolean;
   event_five_ten: boolean;
-  event_no_boom: boolean;
   event_one_plus_one: boolean;
   mvp_discount: number;
   starcatch: number[];
@@ -14,13 +13,12 @@ export type Config = {
 
 export const DEFAULT_CONFIG: Config = {
   item_level: 150,
-  item_from_star: 10,
+  item_from_star: 12,
   item_to_star: 17,
   replacement_cost: 0,
   safeguard: false,
   event_thirty_off: false,
   event_five_ten: false,
-  event_no_boom: false,
   event_one_plus_one: false,
   mvp_discount: 0,
   starcatch: [],

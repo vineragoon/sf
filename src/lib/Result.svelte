@@ -33,33 +33,6 @@
     return round_to(num, 2);
   };
 
-  const display_percent = (num: number) => {
-    if (Number.isNaN(num)) {
-      return "0%";
-    }
-
-    return `${round_to(num * 100, 1)}%`;
-  };
-
-  const to_readable_label = (key: string) => {
-    switch (key) {
-      case "event_thirty_off":
-        return "30% off";
-      case "event_five_ten":
-        return "5/10/15";
-      case "event_no_boom":
-        return "12-15 no boom";
-      case "event_one_plus_one":
-        return "1+1 up to 10";
-      case "mvp_discount":
-        return "MVP discount";
-      case "starcatch":
-        return "Starcatch";
-      default:
-        return "programmer error";
-    }
-  };
-
   let result: Result;
   $: result = expected_from_config(config);
   let base: Result;

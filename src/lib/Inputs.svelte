@@ -126,11 +126,6 @@
       <span>5/10/15</span>
     </label>
 
-    <label class="button" class:checked={config.event_no_boom}>
-      <input type="checkbox" bind:checked={config.event_no_boom} />
-      <span>12-15 no boom</span>
-    </label>
-
     <label class="button" class:checked={config.event_one_plus_one}>
       <input type="checkbox" bind:checked={config.event_one_plus_one} />
       <span>1+1 up to 10</span>
@@ -171,7 +166,7 @@
   </legend>
 
   <div class="inputs">
-    {#each [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] as star}
+    {#each [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] as star}
       <label
         class="button draggable"
         class:checked={config.starcatch.includes(star)}

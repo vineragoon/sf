@@ -1,7 +1,7 @@
 # starforce calculator
 
-This is an analytical starforce calculator for GMS, post-Ignition starforce
-costs, based on the math from https://amph.shinyapps.io/starforce.
+This is an analytical starforce calculator for post-Savior starforce costs,
+based on the math from https://amph.shinyapps.io/starforce.
 
 This came about from a personal desire to have a starforce calculator that was
 correct, fast, and up-to-date.
@@ -22,3 +22,29 @@ Feel free to open issues in this project if you believe there are any mistakes,
 although I can't promise I'll answer them super quickly.
 
 Cary#0001, `aCyr` in GMS Reboot
+
+# Changelog
+
+## 2023-06-13
+
+Updated starforce calculations for GMS Savior
+
+### Changed
+
+  - Removed 12-15 no boom, as that is no longer relevant
+  - Added cost calculation for stars below 10
+  - Only allow starcatching on 12+ to reduce the number of buttons. Old URLs
+      will break slightly.
+
+## 2022-11-19
+
+Updated starforce costs for GMS Ignition
+
+### Changed
+
+  - Use `PointerEvent` instead of `MouseEvent` to support dragging on touch devices
+  - Improved text wrapping in results section on smaller screens
+
+## 2022-10-13
+
+Initial release

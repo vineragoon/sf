@@ -27,8 +27,8 @@
       let packed: string = opts["starcatch"];
 
       let starcatch = [];
-      for (let i = 10; i < 25; i++) {
-        if (packed.charAt(i - 10) === "1") {
+      for (let i = 12; i < 25; i++) {
+        if (packed.charAt(i - 12) === "1") {
           starcatch.push(i);
         }
       }
@@ -53,7 +53,7 @@
     // Add starcatch as a bitmap.
     if (starcatch.length > 0) {
       let bitmap = [];
-      for (let i = 10; i < 25; i++) {
+      for (let i = 12; i < 25; i++) {
         bitmap.push(starcatch.includes(i) ? 1 : 0);
       }
       rest["starcatch"] = bitmap.join("");
