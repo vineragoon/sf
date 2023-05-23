@@ -25,7 +25,7 @@
     }
   };
 
-  const display_booms = (num: number) => {
+  const display_two_decimals = (num: number) => {
     if (Number.isNaN(num)) {
       return "";
     }
@@ -35,8 +35,6 @@
 
   let result: Result;
   $: result = expected_from_config(config);
-  let base: Result;
-  $: base = expected_from_config({ ...config, ...DEFAULT_VALUES });
 </script>
 
 <output>
@@ -45,18 +43,18 @@
       <div class="description">Mesos</div>
       <div class="value">
         {display_cost(result.cost)}
-        <span class="base" title="off event, no mvp discount, no starcatch">
-          / {display_cost(base.cost)}
-        </span>
+      </div>
+    </div>
+    <div class="summary prob-make">
+      <div class="description">% success before boom</div>
+      <div class="value">
+        {display_two_decimals(100 * result.prob_success)}%
       </div>
     </div>
     <div class="summary booms">
       <div class="description">Booms</div>
       <div class="value">
-        {display_booms(result.booms)}
-        <span class="base" title="off event, no mvp discount, no starcatch">
-          / {display_booms(base.booms)}
-        </span>
+        {display_two_decimals(result.booms)}
       </div>
     </div>
   </div>
@@ -66,13 +64,11 @@
   @tailwind utilities;
 
   .header {
-    display: flex;
+    @apply flex justify-between;
     @apply my-12;
-    @apply flex-wrap gap-x-4 gap-y-8;
+    @apply flex-wrap gap-y-8;
 
     .summary {
-      flex: 1 1 auto;
-
       .description {
         font-weight: 500;
         @apply text-2xl;
@@ -82,26 +78,22 @@
         @apply text-7xl;
       }
 
-      .base {
-        @apply text-4xl;
-      }
-
       &.mesos {
         @apply text-amber-400;
         text-align: left;
+      }
 
-        .base {
-          @apply text-amber-700;
-        }
+      &.prob-make {
+        @apply text-gray-400;
+        text-align: center;
+
+        @apply order-3 basis-full;
+        @apply md:order-none md:basis-auto;
       }
 
       &.booms {
         @apply text-red-600;
         text-align: right;
-
-        .base {
-          @apply text-red-900;
-        }
       }
     }
   }

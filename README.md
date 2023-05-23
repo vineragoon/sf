@@ -29,12 +29,22 @@ Cary#0001, `aCyr` in GMS Reboot
 
 Updated starforce calculations for GMS Savior
 
+### Added
+
+  - Compute probability of success before booming
+  - Cost calculation for stars below 10
+
 ### Changed
 
-  - Removed 12-15 no boom, as that is no longer relevant
-  - Added cost calculation for stars below 10
-  - Only allow starcatching on 12+ to reduce the number of buttons. Old URLs
-      will break slightly.
+  - Cost calculations updated for GMS Savior.
+  - Only allow starcatching on 12+ to reduce the number of buttons. Breaking
+      change for old URLs.
+
+### Removed
+
+  - 12-15 no boom, as that is no longer relevant
+  - No-starcatch no-event computations, as that was frequently a source of
+      confusion
 
 ## 2022-11-19
 

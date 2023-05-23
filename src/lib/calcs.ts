@@ -106,10 +106,6 @@ const cost_and_odds = (config: Config, star: number) => {
 
 const expected_cost_to_next = (config: Config, star: number, prior_costs: number[]) => {
   const [c, s, f, d] = cost_and_odds(config, star);
-  if (star < 15) {
-    // Failure doesn't decrease starforce before 15.
-    return c / s;
-  }
 
   let F = 0;
   for (let i = 12; i < star; i++) {
@@ -117,7 +113,7 @@ const expected_cost_to_next = (config: Config, star: number, prior_costs: number
   }
 
   const prev_checkpoint = Math.trunc(star / 5) * 5;
-  if (star - prev_checkpoint === 0) {
+  if (star < 15 || star - prev_checkpoint === 0) {
     return (c + d * (F + config.replacement_cost)) / s;
   } else if (star - prev_checkpoint === 1) {
     return (c + f * prior_costs[star - 1] + d * (F + config.replacement_cost)) / s;
@@ -136,10 +132,6 @@ const expected_cost_to_next = (config: Config, star: number, prior_costs: number
 
 const expected_booms_to_next = (config: Config, star: number, prior_booms: number[]) => {
   const [_c, s, f, d] = cost_and_odds(config, star);
-  if (star < 15) {
-    // Failure doesn't decrease starforce before 15.
-    return d / s;
-  }
 
   let F = 0;
   for (let i = 12; i < star; i++) {
@@ -147,32 +139,55 @@ const expected_booms_to_next = (config: Config, star: number, prior_booms: numbe
   }
 
   const prev_checkpoint = Math.trunc(star / 5) * 5;
-  if (star - prev_checkpoint === 0) {
+  if (star < 15 || star - prev_checkpoint === 0) {
     return (d * (1 + F)) / s;
   } else if (star - prev_checkpoint === 1) {
     return (f * prior_booms[star - 1] + d * (1 + F)) / s;
   } else {
     const [_c2, _s2, f2, d2] = cost_and_odds(config, star - 1);
-    let [_c3, _s3, _f3, _d3] = cost_and_odds(config, star - 2);
     return (f * f2 * prior_booms[star - 1] + (f * d2 + d) * (1 + F)) / s;
+  }
+};
+
+const prob_success_to_next = (config: Config, star: number, prior_prob_success: number[]) => {
+  // Intuitively, the value we want to compute is:
+  //     sum P(success from current star) * P(return to current star without booming) ^ n
+  //     n = 0 to infinity
+  // Because this is a geometric sum that always converges with the values we have, we easily have a
+  // closed form of:
+  //     P(success from current star) / (1 - P(return to current star without booming))
+  const [_c, s, f, d] = cost_and_odds(config, star);
+
+  const prev_checkpoint = Math.trunc(star / 5) * 5;
+  if (star < 15 || star - prev_checkpoint === 0) {
+    return s / (1 - f);
+  } else if (star - prev_checkpoint === 1) {
+    return s / (1 - f * prior_prob_success[star - 1]);
+  } else {
+    const [_c2, s2, f2, d2] = cost_and_odds(config, star - 1);
+    return s / (1 - (f * s2 + f * f2 * prior_prob_success[star - 1]));
   }
 };
 
 export type Result = {
   cost: number;
   booms: number;
+  prob_success: number;
 };
 
 export const expected_from_config = (config: Config): Result => {
   let cost_to_next_star: number[] = [];
   let booms_to_next_star: number[] = [];
+  let prob_success_to_next_star: number[] = [];
   for (let i = 0; i < 25; i++) {
     cost_to_next_star[i] = expected_cost_to_next(config, i, cost_to_next_star);
     booms_to_next_star[i] = expected_booms_to_next(config, i, booms_to_next_star);
+    prob_success_to_next_star[i] = prob_success_to_next(config, i, prob_success_to_next_star);
   }
 
   let cost = 0;
   let booms = 0;
+  let prob_success = 1;
   for (let i = config.item_from_star; i < config.item_to_star; i++) {
     if (config.event_one_plus_one && i <= 11 && (i - config.item_from_star) % 2 === 1) {
       // Skip the cost of every other star if 1 + 1.
@@ -180,7 +195,8 @@ export const expected_from_config = (config: Config): Result => {
     }
     cost += cost_to_next_star[i];
     booms += booms_to_next_star[i];
+    prob_success *= prob_success_to_next_star[i];
   }
 
-  return { cost, booms };
+  return { cost, booms, prob_success };
 };
