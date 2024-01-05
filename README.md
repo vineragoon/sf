@@ -1,4 +1,4 @@
-# starforce calculator
+# [starforce calculator](https://acyr0.github.io/starforce/)
 
 This is an analytical starforce calculator for post-Savior starforce costs,
 based on the math from https://amph.shinyapps.io/starforce.
