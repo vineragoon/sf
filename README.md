@@ -1,3 +1,5 @@
+I'm trying to edit aCyr0's star force calculator with rates from MapleSea's Guardian Angel star force event but I have no idea what I'm doing
+
 # [starforce calculator](https://acyr0.github.io/starforce/)
 
 This is an analytical starforce calculator for post-Savior starforce costs,
