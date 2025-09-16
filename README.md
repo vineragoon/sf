@@ -1,4 +1,4 @@
-I'm trying to edit aCyr0's star force calculator with rates from MapleSea's Guardian Angel star force event but I have no idea what I'm doing
+I'm trying to edit aCyr0's star force calculator to use rates from MapleSea's Guardian Angel star force event but I have no idea what I'm doing
 
 # [starforce calculator](https://acyr0.github.io/starforce/)
 
